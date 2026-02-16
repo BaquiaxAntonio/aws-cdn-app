@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# Assignment 02 — AWS CDN Deployment
+## Descripción
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web desarrollada con **Vite + React + TypeScript**.
+El despliegue se realiza automáticamente mediante **GitHub Actions** hacia **AWS S3**, y es distribuida globalmente usando **CloudFront CDN**.
 
-Currently, two official plugins are available:
+Las credenciales sensibles son gestionadas de forma segura mediante **Doppler**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Arquitectura del Proyecto
+Vite → Build → GitHub Actions → S3 → CloudFront CDN
 
-## React Compiler
+## URL Pública del CDN
+http://bucket-cdn-aws.s3-website-us-east-1.amazonaws.com
+https://d4lkl9wc4ls1w.cloudfront.net/
+## ⚙️ Tecnologías Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Vite
+- React + TypeScript
+- AWS S3
+- AWS CloudFront
+- GitHub Actions
+- Doppler (Secret Management)
 
-## Expanding the ESLint configuration
+## Evidencia de Configuración
+las Capturas de pantalla se encuetran en la carpeta Screenshots
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Evidencia de Desarrollo
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+El desarrollo fue realizado en la rama:
+assignment-02
+Se realizaron múltiples commits incrementales para demostrar evolución del proyecto.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Flujo CI/CD
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+El pipeline realiza automáticamente:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Instalación de dependencias
+2. Build del proyecto
+3. Sincronización del contenido `dist/` hacia S3
+4. Invalidación de caché en CloudFront
