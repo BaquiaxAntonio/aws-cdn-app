@@ -11,7 +11,7 @@ Vite → Build → GitHub Actions → S3 → CloudFront CDN
 
 ## URL Pública del CDN
 http://bucket-cdn-aws.s3-website-us-east-1.amazonaws.com
-
+https://d4lkl9wc4ls1w.cloudfront.net/
 ## ⚙️ Tecnologías Utilizadas
 
 - Vite
